@@ -1,10 +1,14 @@
 import os
+import re
 from dotenv import load_dotenv
 from groq import Groq
 from store import search
 
 load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+raw_key = os.getenv("GROQ_API_KEY", "")
+api_key = re.sub(r"[^A-Za-z0-9_-]", "", raw_key)
+print("key length raw/clean:", len(raw_key), len(api_key), flush=True)
+client = Groq(api_key=api_key)
 
 def answer(question, k=4):
     hits = search(question, k)

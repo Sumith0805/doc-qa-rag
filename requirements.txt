@@ -1,6 +1,5 @@
 streamlit
 chromadb
-sentence-transformers
 pypdf
 groq
 python-dotenv

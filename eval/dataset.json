@@ -1,0 +1,534 @@
+{
+  "documents": [
+    "docs/attention_is_all_you_need.pdf",
+    "docs/hr_policy.txt"
+  ],
+  "cases": [
+    {
+      "id": "att-01",
+      "question": "How many identical layers are in the Transformer encoder stack?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            3
+          ],
+          "evidence": "N = 6"
+        }
+      ],
+      "answer_any": [
+        "6",
+        "six"
+      ]
+    },
+    {
+      "id": "att-02",
+      "question": "How many parallel attention heads does the base Transformer use?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            5
+          ],
+          "evidence": "h = 8"
+        }
+      ],
+      "answer_any": [
+        "8",
+        "eight"
+      ]
+    },
+    {
+      "id": "att-03",
+      "question": "What is the dimension d_k of each attention head?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            5
+          ],
+          "evidence": "= 64"
+        }
+      ],
+      "answer_any": [
+        "64"
+      ]
+    },
+    {
+      "id": "att-04",
+      "question": "Which optimizer was used to train the Transformer?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            7
+          ],
+          "evidence": "Adam optimizer"
+        }
+      ],
+      "answer_any": [
+        "Adam"
+      ]
+    },
+    {
+      "id": "att-05",
+      "question": "How many warmup steps were used in the learning rate schedule?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            7
+          ],
+          "evidence": "warmup_steps"
+        }
+      ],
+      "answer_any": [
+        "4000",
+        "4,000"
+      ]
+    },
+    {
+      "id": "att-06",
+      "question": "What hardware was used to train the models?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            8
+          ],
+          "evidence": "8 P100"
+        }
+      ],
+      "answer_any": [
+        "P100"
+      ]
+    },
+    {
+      "id": "att-07",
+      "question": "What BLEU score did the big Transformer get on WMT 2014 English-to-German?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            1,
+            8
+          ],
+          "evidence": "28.4"
+        }
+      ],
+      "answer_any": [
+        "28.4"
+      ]
+    },
+    {
+      "id": "att-08",
+      "question": "What BLEU score did the Transformer reach on WMT 2014 English-to-French?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            1,
+            8
+          ],
+          "evidence": "41."
+        }
+      ],
+      "answer_any": [
+        "41.0",
+        "41.8"
+      ]
+    },
+    {
+      "id": "att-09",
+      "question": "What dropout rate was used for the base model?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            8
+          ],
+          "evidence": "Pdrop = 0.1"
+        }
+      ],
+      "answer_any": [
+        "0.1"
+      ]
+    },
+    {
+      "id": "att-10",
+      "question": "What value of label smoothing was employed during training?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            8
+          ],
+          "evidence": "label smoothing"
+        }
+      ],
+      "answer_any": [
+        "0.1"
+      ]
+    },
+    {
+      "id": "att-11",
+      "question": "What kind of positional encoding does the Transformer use?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            6
+          ],
+          "evidence": "sinusoid"
+        }
+      ],
+      "answer_any": [
+        "sinusoid",
+        "sine",
+        "cosine"
+      ]
+    },
+    {
+      "id": "att-12",
+      "question": "What beam size was used during inference?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            8
+          ],
+          "evidence": "beam size of 4"
+        }
+      ],
+      "answer_any": [
+        "4"
+      ]
+    },
+    {
+      "id": "att-13",
+      "question": "Why is multi-head attention used instead of a single attention head?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            5
+          ],
+          "evidence": "representation subspaces"
+        }
+      ],
+      "answer_any": [
+        "subspace",
+        "different positions",
+        "jointly"
+      ]
+    },
+    {
+      "id": "att-14",
+      "question": "How large is the shared byte-pair vocabulary for English-German?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            7
+          ],
+          "evidence": "37000"
+        }
+      ],
+      "answer_any": [
+        "37000",
+        "37,000",
+        "37K",
+        "37 000"
+      ]
+    },
+    {
+      "id": "att-15",
+      "question": "Which dataset was used for the English constituency parsing experiments?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            9
+          ],
+          "evidence": "Wall Street Journal"
+        }
+      ],
+      "answer_any": [
+        "Wall Street Journal",
+        "WSJ",
+        "Penn Treebank"
+      ]
+    },
+    {
+      "id": "att-16",
+      "question": "How long did training of the base models take?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            7
+          ],
+          "evidence": "12 hours"
+        }
+      ],
+      "answer_any": [
+        "12 hours"
+      ]
+    },
+    {
+      "id": "hr-01",
+      "question": "How many days of paid annual leave do full-time employees get?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "24 days"
+        }
+      ],
+      "answer_any": [
+        "24"
+      ]
+    },
+    {
+      "id": "hr-02",
+      "question": "How many unused leave days can be carried over to the next year?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "maximum of 5 days"
+        }
+      ],
+      "answer_any": [
+        "5",
+        "five"
+      ]
+    },
+    {
+      "id": "hr-03",
+      "question": "After how many consecutive sick days is a medical certificate required?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "more than 3 consecutive days"
+        }
+      ],
+      "answer_any": [
+        "3",
+        "three"
+      ]
+    },
+    {
+      "id": "hr-04",
+      "question": "How many days per week can employees work remotely?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "up to 2 days per week"
+        }
+      ],
+      "answer_any": [
+        "2",
+        "two"
+      ]
+    },
+    {
+      "id": "hr-05",
+      "question": "What is the standard notice period for resignation?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "60 days"
+        }
+      ],
+      "answer_any": [
+        "60",
+        "sixty"
+      ]
+    },
+    {
+      "id": "hr-06",
+      "question": "What notice do employees in probation need to give?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "15 days notice"
+        }
+      ],
+      "answer_any": [
+        "15",
+        "fifteen"
+      ]
+    },
+    {
+      "id": "hr-07",
+      "question": "What is the daily meal allowance during business travel?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "1500 rupees"
+        }
+      ],
+      "answer_any": [
+        "1500",
+        "1,500"
+      ]
+    },
+    {
+      "id": "hr-08",
+      "question": "Within how many days must travel expenses be submitted?",
+      "category": "factoid",
+      "sources": [
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "within 30 days"
+        }
+      ],
+      "answer_any": [
+        "30",
+        "thirty"
+      ]
+    },
+    {
+      "id": "x-01",
+      "question": "What BLEU score did the Transformer get on English-to-German translation, and how many days of annual leave do ACME employees receive?",
+      "category": "cross_doc",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            1,
+            8
+          ],
+          "evidence": "28.4"
+        },
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "24 days"
+        }
+      ],
+      "answer_all": [
+        "28.4",
+        "24"
+      ]
+    },
+    {
+      "id": "x-02",
+      "question": "How many attention heads does the base Transformer use, and what is ACME's standard resignation notice period?",
+      "category": "cross_doc",
+      "sources": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "pages": [
+            5
+          ],
+          "evidence": "h = 8"
+        },
+        {
+          "filename": "hr_policy.txt",
+          "pages": [
+            1
+          ],
+          "evidence": "60 days"
+        }
+      ],
+      "answer_all": [
+        "8",
+        "60"
+      ]
+    },
+    {
+      "id": "u-01",
+      "question": "What is the capital of France?",
+      "category": "unsupported",
+      "sources": [],
+      "must_not_contain": [
+        "paris"
+      ]
+    },
+    {
+      "id": "u-02",
+      "question": "Who won the 2018 FIFA World Cup?",
+      "category": "unsupported",
+      "sources": [],
+      "must_not_contain": [
+        "world cup"
+      ]
+    },
+    {
+      "id": "u-03",
+      "question": "What is the CEO's annual salary at ACME Corp?",
+      "category": "unsupported",
+      "sources": [],
+      "must_not_contain": [
+        "salary"
+      ]
+    },
+    {
+      "id": "u-04",
+      "question": "How many days of paternity leave does ACME offer?",
+      "category": "unsupported",
+      "sources": [],
+      "must_not_contain": [
+        "paternity"
+      ]
+    },
+    {
+      "id": "u-05",
+      "question": "What accuracy did the Transformer achieve on ImageNet image classification?",
+      "category": "unsupported",
+      "sources": [],
+      "must_not_contain": [
+        "imagenet"
+      ]
+    }
+  ]
+}

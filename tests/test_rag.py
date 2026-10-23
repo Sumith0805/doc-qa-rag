@@ -72,3 +72,49 @@ def test_prompt_contains_filename_and_page():
 
     rag.answer("my question", min_score=0.1, search_fn=lambda q, k: [hit(1, "doc.pdf", 9, "zzz")], llm_fn=llm)
     assert "doc.pdf, page 9" in seen["p"] and "my question" in seen["p"]
+
+
+# ---------- citation verification ----------
+WSJ = "We trained on the Wall Street Journal portion of the Penn Treebank for parsing."
+OTHER = "Reducing the attention key size hurts model quality in Table 3 rows."
+
+
+def test_label_on_wrong_chunk_is_repaired():
+    hits = [hit(1, "p.pdf", 9, OTHER), hit(2, "p.pdf", 9, WSJ)]
+    r = rag.answer(
+        "which dataset", min_score=0.1, search_fn=lambda q, k: hits,
+        llm_fn=lambda p, h: "It used the Wall Street Journal portion of the Penn Treebank. [S1]",
+    )
+    assert "[S2]" in r["answer"] and "[S1]" not in r["answer"]
+    assert r["citation_fixes"] == [{"from": [1], "to": 2}]
+    assert [c["chunk_id"] for c in r["citations"]] == ["d2:0"]
+
+
+def test_correct_citation_is_left_alone():
+    hits = [hit(1, "p.pdf", 9, WSJ), hit(2, "p.pdf", 9, OTHER)]
+    r = rag.answer(
+        "which dataset", min_score=0.1, search_fn=lambda q, k: hits,
+        llm_fn=lambda p, h: "It used the Wall Street Journal portion of the Penn Treebank [S1].",
+    )
+    assert r["citation_fixes"] == []
+    assert [c["chunk_id"] for c in r["citations"]] == ["d1:0"]
+
+
+def test_overlapping_chunks_do_not_trigger_a_repair():
+    hits = [hit(1, "p.pdf", 9, WSJ), hit(2, "p.pdf", 9, WSJ + " More text.")]
+    _, fixes = rag.verify_citations("Wall Street Journal portion of the Penn Treebank [S1]", hits)
+    assert fixes == []
+
+
+def test_each_sentence_is_checked_separately():
+    hits = [hit(1, "a", 1, "Cats sleep sixteen hours daily."), hit(2, "b", 1, "Rockets burn liquid oxygen fuel.")]
+    text = "Cats sleep sixteen hours daily [S2]. Rockets burn liquid oxygen fuel [S1]."
+    fixed, fixes = rag.verify_citations(text, hits)
+    assert fixed == "Cats sleep sixteen hours daily [S1]. Rockets burn liquid oxygen fuel [S2]."
+    assert len(fixes) == 2
+
+
+def test_very_short_claims_and_invalid_labels_are_skipped():
+    hits = [hit(1, "a", 1, "Cats sleep sixteen hours daily.")]
+    assert rag.verify_citations("Yes [S1]", hits) == ("Yes [S1]", [])
+    assert rag.verify_citations("Cats sleep sixteen hours daily [S9]", hits)[1] == []

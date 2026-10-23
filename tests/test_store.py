@@ -132,3 +132,9 @@ def test_end_to_end_answer_and_abstention(two_docs):
     assert not ok["abstained"] and ok["citations"][0]["filename"] == "cats.txt"
     no = answer("quantum banana zebra volcano", min_score=0.05)
     assert no["abstained"]
+
+
+def test_compound_question_gets_evidence_from_both_documents(two_docs):
+    cats, rockets = two_docs
+    hits = store.search("how long does a cat sleep, and what does a rocket engine need?", k=2)
+    assert {h["doc_id"] for h in hits} == {cats["id"], rockets["id"]}

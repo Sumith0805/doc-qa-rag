@@ -65,9 +65,15 @@ def percentile(vals, p):
 
 
 def source_match(hit_or_cite, source):
+    """Lenient: right file and right page."""
     return hit_or_cite["filename"] == source["filename"] and (
         not source["pages"] or hit_or_cite["page"] in source["pages"]
     )
+
+
+def evidence_match(hit_or_cite, source):
+    """Strict: right file, right page AND the chunk text really contains the expected fact."""
+    return source_match(hit_or_cite, source) and norm(source["evidence"]) in norm(hit_or_cite["text"])
 
 
 def main():
@@ -141,15 +147,17 @@ def main():
                                            if llm != "none" else "weak-evidence gate let it through")
             else:
                 ranks = [i for i, h in enumerate(res["retrieved"], 1)
-                         if any(source_match(h, s) for s in c["sources"])]
-                row["retrieval_hit"] = all(
+                         if any(evidence_match(h, s) for s in c["sources"])]
+                row["page_hit"] = all(
                     any(source_match(h, s) for h in res["retrieved"]) for s in c["sources"])
+                row["retrieval_hit"] = all(
+                    any(evidence_match(h, s) for h in res["retrieved"]) for s in c["sources"])
                 row["first_rank"] = ranks[0] if ranks else None
                 row["wrongly_abstained"] = res["abstained"]
                 if not row["retrieval_hit"]:
-                    missing = [s["filename"] for s in c["sources"]
-                               if not any(source_match(h, s) for h in res["retrieved"])]
-                    row["failures"].append(f"retrieval miss ({', '.join(missing)})")
+                    missing = [f"{s['filename']} (needs: {s['evidence']})" for s in c["sources"]
+                               if not any(evidence_match(h, s) for h in res["retrieved"])]
+                    row["failures"].append(f"retrieval miss: no retrieved chunk contains the fact -> {', '.join(missing)}")
                 if res["abstained"]:
                     row["failures"].append(f"wrongly abstained (top score {row['top_score']})")
                 if llm != "none" and not res["abstained"]:
@@ -161,7 +169,7 @@ def main():
                         ok &= all(norm(a) in low for a in c["answer_all"])
                     row["answer_correct"] = ok
                     row["citation_correct"] = bool(res["grounded"]) and all(
-                        any(source_match(cit, s) for cit in res["citations"]) for s in c["sources"])
+                        any(evidence_match(cit, s) for cit in res["citations"]) for s in c["sources"])
                     if not ok:
                         row["failures"].append("answer missing expected facts")
                     if not row["citation_correct"]:
@@ -178,6 +186,7 @@ def main():
     metrics = {
         "n_cases": len(results),
         "retrieval_hit_rate_pct": pct(sum(r.get("retrieval_hit", False) for r in ans), len(ans)),
+        "page_hit_rate_pct": pct(sum(r.get("page_hit", False) for r in ans), len(ans)),
         "cross_doc_hit_rate_pct": pct(sum(r.get("retrieval_hit", False) for r in cross), len(cross)),
         "mrr": round(statistics.mean(1 / r["first_rank"] if r.get("first_rank") else 0 for r in ans), 3) if ans else None,
         "wrong_abstention_pct": pct(sum(r.get("wrongly_abstained", False) for r in ans), len(ans)),

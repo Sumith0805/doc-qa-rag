@@ -6,11 +6,13 @@ from pathlib import Path
 import chromadb
 
 import config
+import hybrid
 import registry
 from chunker import chunk_text, read_document
 
 _client = None
 _collection = None
+_bm25_stats = None
 _embedding_fn = None  # None -> Chroma default (all-MiniLM-L6-v2 via ONNX)
 
 
@@ -22,9 +24,19 @@ def set_embedding_function(fn):
 
 
 def reset_client():
-    global _client, _collection
+    global _client, _collection, _bm25_stats
     _client = None
     _collection = None
+    _bm25_stats = None
+
+
+def _get_bm25_stats():
+    """BM25 corpus statistics over all chunks; rebuilt after any index/delete."""
+    global _bm25_stats
+    if _bm25_stats is None:
+        docs = _get_collection().get(include=["documents"])["documents"]
+        _bm25_stats = hybrid.build_stats(docs)
+    return _bm25_stats
 
 
 def _get_collection():
@@ -47,6 +59,8 @@ def _get_collection():
 
 
 def _delete_chunks(doc_id):
+    global _bm25_stats
+    _bm25_stats = None
     _get_collection().delete(where={"doc_id": doc_id})
 
 
@@ -86,6 +100,7 @@ def index_document(path, filename):
                     for j, c in enumerate(batch)
                 ],
             )
+        _invalidate_bm25()
         registry.mark_ready(doc_id, pages=len(pages), chunks=len(chunks))
     except Exception as exc:
         try:
@@ -96,15 +111,30 @@ def index_document(path, filename):
     return {**registry.get_document(doc_id), "duplicate": False}
 
 
+def _invalidate_bm25():
+    global _bm25_stats
+    _bm25_stats = None
+
+
 def search(question, k=None, doc_ids=None):
-    """Semantic search across all (or selected) documents.
-    score = cosine similarity in [-1, 1] (higher = more relevant)."""
+    """Hybrid (dense + BM25) search across all (or selected) documents.
+    Compound questions are split into sub-questions that are retrieved separately and
+    interleaved, so each part gets its own evidence.
+    score = cosine similarity in [-1, 1] (relative to the sub-question that found the hit)."""
     k = k or config.TOP_K
+    parts = hybrid.split_question(question) if config.MULTI_QUERY else [question]
+    if len(parts) == 1:
+        return _search_one(question, k, doc_ids)
+    return hybrid.merge_round_robin([_search_one(p, k, doc_ids) for p in parts], k)
+
+
+def _search_one(question, k, doc_ids=None):
     col = _get_collection()
     total = col.count()
     if total == 0:
         return []
-    kwargs = {"query_texts": [question], "n_results": min(k, total)}
+    pool = max(k, config.CANDIDATE_POOL) if config.HYBRID else k
+    kwargs = {"query_texts": [question], "n_results": min(pool, total)}
     if doc_ids:
         ids = list(doc_ids)
         kwargs["where"] = {"doc_id": ids[0]} if len(ids) == 1 else {"doc_id": {"$in": ids}}
@@ -123,7 +153,11 @@ def search(question, k=None, doc_ids=None):
                 "score": round(1.0 - float(dist), 4),
             }
         )
-    return hits
+    if config.HYBRID:
+        hits = hybrid.fuse(
+            question, hits, _get_bm25_stats(), k, rrf_k=config.RRF_K, bm25_weight=config.BM25_WEIGHT
+        )
+    return hits[:k]
 
 
 def delete_document(doc_id):

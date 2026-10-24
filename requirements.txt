@@ -1,5 +1,5 @@
-streamlit
-chromadb
-pypdf
-groq
-python-dotenv
+streamlit==1.65.0
+chromadb==1.5.9
+pypdf==6.19.0
+groq==1.7.0
+python-dotenv==1.2.4

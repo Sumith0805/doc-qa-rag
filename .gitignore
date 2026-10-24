@@ -1,7 +1,18 @@
-venv/
+# secrets
 .env
 .env.txt
+
+# environments / caches
+venv/
+.venv/
 __pycache__/
+.pytest_cache/
+
+# runtime data (SQLite + vector index) - never commit user documents
+data/
 chroma_db/
+
+# scratch files
 test.py
 models.py
+appbackup.py

@@ -1,0 +1,17 @@
+services:
+  documind:
+    build: .
+    image: documind:latest
+    ports:
+      - "8501:8501"
+    environment:
+      # Compose reads these from your local .env file (which is NOT copied into the image)
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      DOCUMIND_LLM: ${DOCUMIND_LLM:-groq}
+      DOCUMIND_MIN_SCORE: ${DOCUMIND_MIN_SCORE:-0.25}
+    volumes:
+      - documind_data:/data   # SQLite + vector index survive container restarts
+    restart: unless-stopped
+
+volumes:
+  documind_data:

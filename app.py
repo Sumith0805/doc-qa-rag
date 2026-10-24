@@ -1,10 +1,12 @@
 
+import html
 import os
 import tempfile
-import hashlib
+
 import streamlit as st
 
-from store import build_index
+import registry
+import store
 from rag import answer
 
 
@@ -38,6 +40,49 @@ defaults = {
 for key, value in defaults.items():
     if key not in st.session_state:
         st.session_state[key] = value
+
+st.session_state.setdefault("processed_uploads", set())
+st.session_state.setdefault("flash", [])
+
+
+def sync_state_from_db():
+    """Documents, chat history and stats live in SQLite (persistent); the UI just mirrors them."""
+    docs = registry.list_documents()
+    ready = [d for d in docs if d["status"] == "ready"]
+    st.session_state["documents"] = [
+        {
+            "id": d["id"],
+            "name": html.escape(d["filename"]),  # filenames are user input -> escape for HTML
+            "hash": d["sha256"],
+            "chunks": d["chunks"],
+            "pages": d["pages"],
+            "status": d["status"],
+            "error": d["error"],
+            "created_at": d["created_at"],
+        }
+        for d in docs
+    ]
+    st.session_state["loaded"] = ready[-1]["id"] if ready else None
+    st.session_state["document_name"] = (
+        f"{len(ready)} document{'s' if len(ready) != 1 else ''} in your library"
+    )
+    st.session_state["chunk_count"] = sum(d["chunks"] for d in ready)
+    stats = registry.stats()
+    st.session_state["questions_count"] = stats["questions"]
+    st.session_state["sources_count"] = stats["sources"]
+    st.session_state["chat_history"] = [
+        {
+            "question": m["question"],
+            "answer": m["answer"],
+            "abstained": m["abstained"],
+            "latency_ms": m["latency_ms"],
+            "sources": m["sources"],
+        }
+        for m in registry.list_messages(50)
+    ]
+
+
+sync_state_from_db()
 
 
 # =========================================================
@@ -566,7 +611,7 @@ with st.sidebar:
     if st.button("✦   AI Assistant", use_container_width=True):
         st.session_state["active_page"] = "AI Assistant"
 
-    render_html('<div class="sidebar-section">SESSION OVERVIEW</div>')
+    render_html('<div class="sidebar-section">WORKSPACE OVERVIEW</div>')
 
     render_html(f"""
     <div class="sidebar-stat">
@@ -593,7 +638,7 @@ with st.sidebar:
                     📄 {doc["name"]}
                 </div>
                 <div class="sidebar-document-meta">
-                    {doc["chunks"]} chunks · Indexed
+                    {doc["chunks"]} chunks · {doc["status"].capitalize()}
                 </div>
             </div>
             """)
@@ -652,9 +697,9 @@ total_sources = st.session_state["sources_count"]
 m1, m2, m3, m4 = st.columns(4, gap="small")
 
 metrics = [
-    (m1, "DOCUMENTS", total_docs, "📁", "Uploaded this session"),
+    (m1, "DOCUMENTS", total_docs, "📁", "Stored in your library"),
     (m2, "INDEXED CHUNKS", total_chunks, "◈", "Reported by the indexer"),
-    (m3, "QUESTIONS ASKED", total_questions, "✦", "Across this session"),
+    (m3, "QUESTIONS ASKED", total_questions, "✦", "Saved chat history"),
     (m4, "SOURCE PASSAGES", total_sources, "⌕", "Returned by the retriever"),
 ]
 
@@ -680,21 +725,36 @@ if page == "My Documents":
     render_html("""
     <div class="section-heading">Your document library</div>
     <div class="section-caption">
-        Documents uploaded during this app session.
+        Every document in your library with its processing status.
     </div>
     """)
 
     if st.session_state["documents"]:
         for doc in reversed(st.session_state["documents"]):
+            badge = {"ready": "● Ready", "processing": "◌ Processing", "failed": "✕ Failed"}.get(
+                doc["status"], doc["status"]
+            )
+            if doc["status"] == "ready":
+                detail = f'{doc["pages"]} pages · {doc["chunks"]} chunks'
+            else:
+                detail = html.escape(doc["error"] or "")
             render_html(f"""
             <div class="document-card">
                 <div class="document-icon">📄</div>
                 <div class="document-name">{doc["name"]}</div>
                 <div class="document-meta">
-                    Indexed · {doc["chunks"]} chunks
+                    {badge} &nbsp; · &nbsp; {detail} &nbsp; · &nbsp; added {doc["created_at"][:10]}
                 </div>
             </div>
             """)
+            if st.button("🗑  Delete document", key=f"del_{doc['id']}"):
+                try:
+                    store.delete_document(doc["id"])
+                    st.session_state["processed_uploads"] = set()
+                    st.session_state["flash"].append(("success", "Document and its indexed content were deleted."))
+                except Exception as exc:
+                    st.session_state["flash"].append(("error", f"Delete failed: {exc}"))
+                st.rerun()
             st.markdown("")
     else:
         st.info("No documents yet. Upload a PDF from the dashboard.")
@@ -710,7 +770,7 @@ if page == "AI Assistant":
     render_html("""
     <div class="section-heading">AI Assistant</div>
     <div class="section-caption">
-        Ask questions about the currently indexed document.
+        Ask questions across all of your indexed documents.
     </div>
     """)
 
@@ -730,84 +790,57 @@ render_html("""
 </div>
 """)
 
-uploaded = st.file_uploader(
-    "Drop a PDF here or browse files",
-    type=["pdf"],
-    help="Select a PDF document to index.",
-    key="pdf_upload",
+uploaded_files = st.file_uploader(
+    "Drop PDF or text files here, or browse",
+    type=["pdf", "txt", "md"],
+    accept_multiple_files=True,
+    help="You can add several documents; questions search across all of them.",
+    key="doc_upload",
 )
 
 
 # =========================================================
-# INDEX DOCUMENT
+# INDEX DOCUMENTS
 # =========================================================
 
-if uploaded is not None:
-    file_bytes = uploaded.getvalue()
-    file_hash = hashlib.sha256(file_bytes).hexdigest()
+if uploaded_files:
+    changed = False
 
-    if st.session_state["loaded"] != file_hash:
+    for f in uploaded_files:
+        file_id = getattr(f, "file_id", f"{f.name}:{f.size}")
+        if file_id in st.session_state["processed_uploads"]:
+            continue
+        st.session_state["processed_uploads"].add(file_id)
+
         temp_path = None
-
         try:
-            with st.status(
-                "Preparing your document...",
-                expanded=True,
-            ) as status:
-                st.write("Reading PDF contents...")
-                st.write("Building the searchable index...")
-
-                with tempfile.NamedTemporaryFile(
-                    delete=False,
-                    suffix=".pdf",
-                ) as tmp:
-                    tmp.write(file_bytes)
+            with st.status(f"Indexing {f.name}...", expanded=False) as status:
+                suffix = os.path.splitext(f.name)[1].lower()
+                with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                    tmp.write(f.getvalue())
                     temp_path = tmp.name
+                record = store.index_document(temp_path, f.name)
+                status.update(label=f"{f.name} indexed", state="complete")
 
-                try:
-                    chunk_count = build_index(temp_path)
-                finally:
-                    if temp_path and os.path.exists(temp_path):
-                        os.remove(temp_path)
-
-                if not chunk_count:
-                    raise ValueError(
-                        "The PDF indexer returned zero chunks."
-                    )
-
-                status.update(
-                    label="Document indexing finished",
-                    state="complete",
-                    expanded=False,
+            if record.get("duplicate"):
+                st.session_state["flash"].append(("info", f"{f.name} was already in your library."))
+            else:
+                st.session_state["flash"].append(
+                    ("success", f"{f.name} is ready ({record['chunks']} chunks).")
                 )
-
-            st.session_state["loaded"] = file_hash
-            st.session_state["document_name"] = uploaded.name
-            st.session_state["chunk_count"] = chunk_count
-            st.session_state["chat_history"] = []
-
-            # Keep one record per unique file hash.
-            existing_hashes = {
-                doc["hash"] for doc in st.session_state["documents"]
-            }
-
-            if file_hash not in existing_hashes:
-                st.session_state["documents"].append({
-                    "name": uploaded.name,
-                    "hash": file_hash,
-                    "chunks": chunk_count,
-                })
-
-            st.success(f"{uploaded.name} is ready to query.")
-
-            st.rerun()
-
         except Exception as exc:
-            st.error(f"Document indexing failed: {exc}")
-            st.info(
-                "Check that the PDF contains readable text and "
-                "that the existing indexer is configured correctly."
-            )
+            st.session_state["flash"].append(("error", f"Indexing {f.name} failed: {exc}"))
+        finally:
+            if temp_path and os.path.exists(temp_path):
+                os.remove(temp_path)
+        changed = True
+
+    if changed:
+        st.rerun()
+
+for kind, message in st.session_state["flash"]:
+    getattr(st, kind)(message)
+st.session_state["flash"] = []
 
 
 # =========================================================
@@ -856,19 +889,18 @@ if st.session_state["loaded"] is not None:
             st.warning("Please enter a question.")
         else:
             try:
-                with st.spinner("Searching your document and generating an answer..."):
-                    answer_text, hits = answer(question.strip())
+                with st.spinner("Searching your documents and generating an answer..."):
+                    result = answer(question.strip())
 
-                hits = hits or []
-
-                st.session_state["questions_count"] += 1
-                st.session_state["sources_count"] += len(hits)
-
-                st.session_state["chat_history"].append({
-                    "question": question.strip(),
-                    "answer": answer_text,
-                    "sources": hits,
-                })
+                registry.add_message(
+                    question.strip(),
+                    result["answer"],
+                    result["abstained"],
+                    result["citations"],
+                    result["latency_ms"],
+                )
+                if result.get("warning"):
+                    st.session_state["flash"].append(("warning", result["warning"]))
 
                 st.rerun()
 
@@ -903,7 +935,11 @@ if st.session_state["chat_history"]:
         </div>
         """)
 
-        st.markdown(conversation["answer"])
+        if conversation.get("abstained"):
+            st.warning(conversation["answer"])
+        else:
+            st.markdown(conversation["answer"])
+        st.caption(f"Answered in {conversation.get('latency_ms', 0)} ms")
 
         sources = conversation["sources"]
 
@@ -914,7 +950,11 @@ if st.session_state["chat_history"]:
                     source_text = source.get("text", "")
                     preview = source_text[:800]
 
-                    st.markdown(f"**Passage {number} · Page {page_number}**")
+                    label = source.get("label", f"S{number}")
+                    filename = source.get("filename", "document")
+                    score = source.get("score")
+                    score_note = f" · similarity {score:.2f}" if isinstance(score, (int, float)) else ""
+                    st.markdown(f"**[{label}] {filename} · Page {page_number}**{score_note}")
                     st.write(
                         preview + ("…" if len(source_text) > 800 else "")
                     )
@@ -922,12 +962,12 @@ if st.session_state["chat_history"]:
                     if number < len(sources):
                         st.divider()
             else:
-                st.info("No source passages were returned.")
+                st.info("No supporting evidence was found, so no answer was generated.")
 
         st.markdown("")
 
     if st.button("Clear conversation", use_container_width=True):
-        st.session_state["chat_history"] = []
+        registry.clear_messages()
         st.rerun()
 
 
@@ -940,7 +980,7 @@ elif st.session_state["loaded"] is None:
     <div class="chat-card">
         <div class="chat-label">YOUR WORKSPACE IS READY</div>
         <div style="font-size:14px;color:#cbd5e1;line-height:1.8;">
-            Upload a PDF above to activate document chat.
+            Upload one or more PDF or text files above to activate document chat.
             Your session statistics and document library will
             update as you work.
         </div>
@@ -956,6 +996,6 @@ render_html("""
 <div class="footer">
     DOCUMIND &nbsp;·&nbsp; AI DOCUMENT INTELLIGENCE
     <br><br>
-    Session statistics reset when the app session is restarted.
+    Documents, chat history and statistics are stored persistently.
 </div>
 """)

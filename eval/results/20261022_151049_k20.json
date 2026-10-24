@@ -1,0 +1,3665 @@
+{
+  "timestamp": "2026-10-22T15:10:49",
+  "label": "k20",
+  "config": {
+    "llm": "none",
+    "model": "none",
+    "k": 20,
+    "min_score": 0.25,
+    "chunk_size": 800,
+    "chunk_overlap": 150
+  },
+  "metrics": {
+    "n_cases": 31,
+    "retrieval_hit_rate_pct": 100.0,
+    "cross_doc_hit_rate_pct": 100.0,
+    "mrr": 0.868,
+    "wrong_abstention_pct": 0.0,
+    "unsupported_abstain_pct": 40.0,
+    "retrieval_ms_p50": 338,
+    "retrieval_ms_p95": 438,
+    "total_ms_p50": 338,
+    "total_ms_p95": 438
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.1,
+      "answerable_wrongly_blocked_pct": 0.0,
+      "unsupported_blocked_pct": 20.0
+    },
+    {
+      "threshold": 0.15,
+      "answerable_wrongly_blocked_pct": 0.0,
+      "unsupported_blocked_pct": 20.0
+    },
+    {
+      "threshold": 0.2,
+      "answerable_wrongly_blocked_pct": 0.0,
+      "unsupported_blocked_pct": 40.0
+    },
+    {
+      "threshold": 0.25,
+      "answerable_wrongly_blocked_pct": 0.0,
+      "unsupported_blocked_pct": 40.0
+    },
+    {
+      "threshold": 0.3,
+      "answerable_wrongly_blocked_pct": 3.8,
+      "unsupported_blocked_pct": 40.0
+    },
+    {
+      "threshold": 0.35,
+      "answerable_wrongly_blocked_pct": 7.7,
+      "unsupported_blocked_pct": 40.0
+    },
+    {
+      "threshold": 0.4,
+      "answerable_wrongly_blocked_pct": 11.5,
+      "unsupported_blocked_pct": 60.0
+    },
+    {
+      "threshold": 0.45,
+      "answerable_wrongly_blocked_pct": 23.1,
+      "unsupported_blocked_pct": 80.0
+    },
+    {
+      "threshold": 0.5,
+      "answerable_wrongly_blocked_pct": 50.0,
+      "unsupported_blocked_pct": 80.0
+    }
+  ],
+  "cases": [
+    {
+      "id": "att-01",
+      "category": "factoid",
+      "question": "How many identical layers are in the Transformer encoder stack?",
+      "failures": [],
+      "retrieval_ms": 354,
+      "top_score": 0.6106,
+      "total_ms": 354,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.6106
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.5724
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.4869
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.4442
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.4436
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.4227
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4046
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3847
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3766
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3724
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.359
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3584
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3398
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3355
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3289
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.3228
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3224
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.319
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3178
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3177
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-02",
+      "category": "factoid",
+      "question": "How many parallel attention heads does the base Transformer use?",
+      "failures": [],
+      "retrieval_ms": 340,
+      "top_score": 0.5766,
+      "total_ms": 340,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.5766
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.4851
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.482
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.4691
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.4463
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.4314
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.3696
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3686
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3615
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3546
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3357
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.328
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3275
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3265
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.321
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.318
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3179
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3178
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3155
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3125
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-03",
+      "category": "factoid",
+      "question": "What is the dimension d_k of each attention head?",
+      "failures": [],
+      "retrieval_ms": 347,
+      "top_score": 0.5941,
+      "total_ms": 347,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.5941
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.5375
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.5125
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.4939
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.493
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.4857
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.4652
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.434
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.4214
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.4087
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.4022
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3896
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.386
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.3769
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3736
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3622
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.3547
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3501
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3436
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.3404
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-04",
+      "category": "factoid",
+      "question": "Which optimizer was used to train the Transformer?",
+      "failures": [],
+      "retrieval_ms": 324,
+      "top_score": 0.4816,
+      "total_ms": 324,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4816
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4404
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4121
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3831
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3745
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.3724
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3441
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3375
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.3302
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3238
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3136
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2891
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2878
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2785
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.263
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.2579
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2461
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2454
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2436
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.2301
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 13,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-05",
+      "category": "factoid",
+      "question": "How many warmup steps were used in the learning rate schedule?",
+      "failures": [],
+      "retrieval_ms": 312,
+      "top_score": 0.6198,
+      "total_ms": 312,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.6198
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.4389
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3025
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.291
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2894
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2832
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2639
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2441
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2434
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.234
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.2258
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.222
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2204
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2161
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2157
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2118
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.211
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.2109
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.2088
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.2059
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-06",
+      "category": "factoid",
+      "question": "What hardware was used to train the models?",
+      "failures": [],
+      "retrieval_ms": 444,
+      "top_score": 0.3698,
+      "total_ms": 444,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3698
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3161
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3069
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3034
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2787
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.2744
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.259
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2542
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2509
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2396
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2356
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2352
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.232
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.231
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2219
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2157
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2119
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2104
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2099
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2097
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-07",
+      "category": "factoid",
+      "question": "What BLEU score did the big Transformer get on WMT 2014 English-to-German?",
+      "failures": [],
+      "retrieval_ms": 350,
+      "top_score": 0.6404,
+      "total_ms": 350,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.6404
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.6177
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.5536
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4982
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.4911
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.471
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4445
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4173
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4014
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3819
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3551
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3537
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3123
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3063
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3025
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3009
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2728
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2649
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2518
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2368
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-08",
+      "category": "factoid",
+      "question": "What BLEU score did the Transformer reach on WMT 2014 English-to-French?",
+      "failures": [],
+      "retrieval_ms": 408,
+      "top_score": 0.6498,
+      "total_ms": 408,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.6498
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.6377
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.5338
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.5272
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.5099
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4864
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4418
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4398
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3823
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3719
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.354
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3534
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3518
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3353
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.325
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2891
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2745
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2719
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2662
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.2502
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-09",
+      "category": "factoid",
+      "question": "What dropout rate was used for the base model?",
+      "failures": [],
+      "retrieval_ms": 421,
+      "top_score": 0.4594,
+      "total_ms": 421,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4594
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.447
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4442
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3877
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3749
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3598
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.327
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.315
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2838
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.2651
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2105
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.2054
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.1953
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.1936
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.1913
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.1888
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.1884
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.1841
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.1814
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.1723
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-10",
+      "category": "factoid",
+      "question": "What value of label smoothing was employed during training?",
+      "failures": [],
+      "retrieval_ms": 332,
+      "top_score": 0.2982,
+      "total_ms": 332,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2982
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2851
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2598
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.255
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2526
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2204
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2189
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2048
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1971
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1845
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.1833
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.178
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.1676
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.1555
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.1553
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.1543
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.1518
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.1426
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.1387
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.1368
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-11",
+      "category": "factoid",
+      "question": "What kind of positional encoding does the Transformer use?",
+      "failures": [],
+      "retrieval_ms": 332,
+      "top_score": 0.5137,
+      "total_ms": 332,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.5137
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.4993
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.4547
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4421
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4213
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.4116
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.4042
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.3834
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.3815
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.381
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.377
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.3662
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3605
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3527
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3464
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3357
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.3288
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3221
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3131
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3113
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 6,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-12",
+      "category": "factoid",
+      "question": "What beam size was used during inference?",
+      "failures": [],
+      "retrieval_ms": 366,
+      "top_score": 0.3453,
+      "total_ms": 366,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3453
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3444
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3045
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2519
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.2248
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2177
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2116
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.21
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.2058
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.1862
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1846
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.1744
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1725
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.1611
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.1575
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.1575
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.1569
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.1546
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.1537
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1477
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 3,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-13",
+      "category": "factoid",
+      "question": "Why is multi-head attention used instead of a single attention head?",
+      "failures": [],
+      "retrieval_ms": 321,
+      "top_score": 0.6077,
+      "total_ms": 321,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.6077
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.5547
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.5527
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.5422
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.4441
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.4378
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.4354
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.4311
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.4293
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.4276
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.4078
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3943
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.371
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.3689
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3655
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.3627
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.3465
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3411
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.3332
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3233
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 2,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-14",
+      "category": "factoid",
+      "question": "How large is the shared byte-pair vocabulary for English-German?",
+      "failures": [],
+      "retrieval_ms": 333,
+      "top_score": 0.4844,
+      "total_ms": 333,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4844
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.4466
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4372
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.4108
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.4002
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.3986
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3945
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3859
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.3762
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3736
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3728
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3572
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3537
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3373
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3365
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3277
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3195
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3128
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.3122
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.303
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 2,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-15",
+      "category": "factoid",
+      "question": "Which dataset was used for the English constituency parsing experiments?",
+      "failures": [],
+      "retrieval_ms": 486,
+      "top_score": 0.5901,
+      "total_ms": 486,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.5901
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.576
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.5185
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.5067
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.4667
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.4559
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.4172
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.4003
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3946
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.3844
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3499
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.3481
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.3342
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3189
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.3155
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.311
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.3066
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.2882
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2847
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2802
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "att-16",
+      "category": "factoid",
+      "question": "How long did training of the base models take?",
+      "failures": [],
+      "retrieval_ms": 359,
+      "top_score": 0.4448,
+      "total_ms": 359,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.4448
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.4211
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3781
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3636
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3484
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3313
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2969
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2937
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2864
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.2775
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2707
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2699
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2689
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.2544
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2505
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2493
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.248
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.248
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2473
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.2443
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-01",
+      "category": "factoid",
+      "question": "How many days of paid annual leave do full-time employees get?",
+      "failures": [],
+      "retrieval_ms": 332,
+      "top_score": 0.6125,
+      "total_ms": 332,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.6125
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.3509
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1316
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1081
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.107
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.092
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.0817
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.0785
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0783
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0741
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.073
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0719
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0678
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0609
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0601
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0575
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0525
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0503
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0496
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0461
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-02",
+      "category": "factoid",
+      "question": "How many unused leave days can be carried over to the next year?",
+      "failures": [],
+      "retrieval_ms": 310,
+      "top_score": 0.5506,
+      "total_ms": 310,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.5506
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.43
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1752
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.1295
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.12
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1169
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1137
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.1058
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1044
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.1041
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.1021
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1016
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1003
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0967
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0915
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0802
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0764
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0686
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0652
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0647
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-03",
+      "category": "factoid",
+      "question": "After how many consecutive sick days is a medical certificate required?",
+      "failures": [],
+      "retrieval_ms": 415,
+      "top_score": 0.4398,
+      "total_ms": 415,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4398
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.2746
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0883
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0835
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0671
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.039
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0303
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.027
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.024
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0183
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0167
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0154
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0151
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0126
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0115
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0081
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0077
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0072
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0055
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0038
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-04",
+      "category": "factoid",
+      "question": "How many days per week can employees work remotely?",
+      "failures": [],
+      "retrieval_ms": 338,
+      "top_score": 0.4859,
+      "total_ms": 338,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4859
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.1948
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.102
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0864
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0844
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0763
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0493
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.047
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0468
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.0455
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0437
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.0415
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0386
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0375
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.0375
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0298
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0236
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0229
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0219
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0205
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-05",
+      "category": "factoid",
+      "question": "What is the standard notice period for resignation?",
+      "failures": [],
+      "retrieval_ms": 322,
+      "top_score": 0.4683,
+      "total_ms": 322,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4683
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.3782
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.1035
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0997
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0939
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0746
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0725
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0652
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0642
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0612
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0609
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0606
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0604
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.0587
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0505
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0415
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.0409
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.0389
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0387
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0367
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-06",
+      "category": "factoid",
+      "question": "What notice do employees in probation need to give?",
+      "failures": [],
+      "retrieval_ms": 438,
+      "top_score": 0.5474,
+      "total_ms": 438,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.5474
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.3988
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.1103
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.1053
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.1
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0932
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0896
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.086
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0819
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.0765
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.0734
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.0712
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0709
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0708
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0695
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0686
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0638
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0552
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.053
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.0503
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-07",
+      "category": "factoid",
+      "question": "What is the daily meal allowance during business travel?",
+      "failures": [],
+      "retrieval_ms": 328,
+      "top_score": 0.4363,
+      "total_ms": 328,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4363
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.3254
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0754
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0636
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0448
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0413
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0396
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.037
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0267
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0255
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0095
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0084
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0061
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0046
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0045
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0023
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": -0.003
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": -0.0057
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": -0.0063
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": -0.0091
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "hr-08",
+      "category": "factoid",
+      "question": "Within how many days must travel expenses be submitted?",
+      "failures": [],
+      "retrieval_ms": 319,
+      "top_score": 0.6265,
+      "total_ms": 319,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.6265
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4619
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.09
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0741
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0695
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0682
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0451
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 13,
+          "score": 0.0405
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0399
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0374
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0318
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0284
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0247
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.022
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0117
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0106
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0083
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.006
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0002
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": -0.0006
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "x-01",
+      "category": "cross_doc",
+      "question": "What BLEU score did the Transformer get on English-to-German translation, and how many days of annual leave do ACME employees receive?",
+      "failures": [],
+      "retrieval_ms": 336,
+      "top_score": 0.4994,
+      "total_ms": 336,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4994
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4802
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4687
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4554
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.4543
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.4455
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.4081
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4029
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.3882
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3649
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3462
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3237
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2845
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2792
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2551
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2481
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2426
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.2397
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2388
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2387
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "x-02",
+      "category": "cross_doc",
+      "question": "How many attention heads does the base Transformer use, and what is ACME's standard resignation notice period?",
+      "failures": [],
+      "retrieval_ms": 338,
+      "top_score": 0.4832,
+      "total_ms": 338,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.4832
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.3611
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.3404
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.29
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2891
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2849
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2814
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2674
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.2599
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2589
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2589
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2565
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.2559
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2497
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2438
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2409
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2394
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2375
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.2335
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.2225
+        }
+      ],
+      "retrieval_hit": true,
+      "first_rank": 1,
+      "wrongly_abstained": false
+    },
+    {
+      "id": "u-01",
+      "category": "unsupported",
+      "question": "What is the capital of France?",
+      "failures": [],
+      "retrieval_ms": 325,
+      "top_score": 0.1648,
+      "total_ms": 325,
+      "abstained": true,
+      "answer": "I couldn't find sufficient evidence in the uploaded documents to answer that question.",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1648
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.1436
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.139
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1379
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.1304
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.1295
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.1154
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.1139
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.1099
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0989
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0984
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.09
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.0872
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0864
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0819
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0811
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0808
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0748
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0729
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0719
+        }
+      ],
+      "abstain_correct": true
+    },
+    {
+      "id": "u-02",
+      "category": "unsupported",
+      "question": "Who won the 2018 FIFA World Cup?",
+      "failures": [],
+      "retrieval_ms": 308,
+      "top_score": 0.0913,
+      "total_ms": 308,
+      "abstained": true,
+      "answer": "I couldn't find sufficient evidence in the uploaded documents to answer that question.",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0913
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0664
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0633
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0588
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0579
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0427
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0416
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0348
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0322
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.0322
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.0272
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0252
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.0209
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0192
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0176
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.015
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0138
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0125
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.0119
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.01
+        }
+      ],
+      "abstain_correct": true
+    },
+    {
+      "id": "u-03",
+      "category": "unsupported",
+      "question": "What is the CEO's annual salary at ACME Corp?",
+      "failures": [
+        "weak-evidence gate let it through"
+      ],
+      "retrieval_ms": 362,
+      "top_score": 0.3832,
+      "total_ms": 362,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.3832
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.1459
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1336
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.1133
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1075
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.1075
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.1016
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0953
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 14,
+          "score": 0.092
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.0914
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.0898
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 4,
+          "score": 0.0896
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0891
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.0818
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.0809
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.0807
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0804
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.0802
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0797
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0751
+        }
+      ],
+      "abstain_correct": false
+    },
+    {
+      "id": "u-04",
+      "category": "unsupported",
+      "question": "How many days of paternity leave does ACME offer?",
+      "failures": [
+        "weak-evidence gate let it through"
+      ],
+      "retrieval_ms": 341,
+      "top_score": 0.513,
+      "total_ms": 341,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.513
+        },
+        {
+          "filename": "hr_policy.txt",
+          "page": 1,
+          "score": 0.2499
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.158
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.1378
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.1254
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.119
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.1117
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.1021
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0983
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0886
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0863
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0857
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0822
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.0793
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 6,
+          "score": 0.0787
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.0758
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.0748
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.0715
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.0696
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.067
+        }
+      ],
+      "abstain_correct": false
+    },
+    {
+      "id": "u-05",
+      "category": "unsupported",
+      "question": "What accuracy did the Transformer achieve on ImageNet image classification?",
+      "failures": [
+        "weak-evidence gate let it through"
+      ],
+      "retrieval_ms": 354,
+      "top_score": 0.4256,
+      "total_ms": 354,
+      "abstained": false,
+      "answer": "(retrieval-only run) [S1]",
+      "retrieved": [
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4256
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.4238
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 3,
+          "score": 0.4235
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.4138
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.375
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3727
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.339
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.338
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 10,
+          "score": 0.3176
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 8,
+          "score": 0.3143
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 11,
+          "score": 0.291
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 5,
+          "score": 0.2869
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2849
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2797
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 1,
+          "score": 0.2761
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 7,
+          "score": 0.2745
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 2,
+          "score": 0.2681
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 15,
+          "score": 0.2624
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 12,
+          "score": 0.2586
+        },
+        {
+          "filename": "attention_is_all_you_need.pdf",
+          "page": 9,
+          "score": 0.2586
+        }
+      ],
+      "abstain_correct": false
+    }
+  ]
+}

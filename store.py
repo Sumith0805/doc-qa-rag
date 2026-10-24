@@ -10,6 +10,11 @@ import hybrid
 import registry
 from chunker import chunk_text, read_document
 
+
+class DemoLimitError(RuntimeError):
+    """An action that the public demo does not allow (too big, library full, delete)."""
+
+
 _client = None
 _collection = None
 _bm25_stats = None
@@ -64,6 +69,23 @@ def _delete_chunks(doc_id):
     _get_collection().delete(where={"doc_id": doc_id})
 
 
+def _check_demo_limits(path):
+    """Public-demo guard rails (no effect unless DOCUMIND_DEMO=1)."""
+    if not config.DEMO_MODE:
+        return
+    size_mb = Path(path).stat().st_size / (1024 * 1024)
+    if size_mb > config.DEMO_MAX_UPLOAD_MB:
+        raise DemoLimitError(
+            f"Files are limited to {config.DEMO_MAX_UPLOAD_MB} MB in the public demo."
+        )
+    in_library = [d for d in registry.list_documents() if d["status"] != "failed"]
+    if len(in_library) >= config.DEMO_MAX_DOCS:
+        raise DemoLimitError(
+            f"The public demo library is full ({config.DEMO_MAX_DOCS} documents). "
+            "You can still ask questions about the documents already loaded."
+        )
+
+
 def index_document(path, filename):
     """Index one file WITHOUT touching other documents. Returns the registry record.
 
@@ -74,8 +96,9 @@ def index_document(path, filename):
     if existing:
         if existing["status"] == "ready":
             return {**existing, "duplicate": True}
-        delete_document(existing["id"])  # failed / stuck earlier attempt -> retry cleanly
+        _remove_document(existing["id"])  # failed / stuck earlier attempt -> retry cleanly
 
+    _check_demo_limits(path)
     doc_id = uuid.uuid4().hex[:12]
     registry.create_document(doc_id, filename, sha)  # status = processing
     try:
@@ -161,6 +184,13 @@ def _search_one(question, k, doc_ids=None):
 
 
 def delete_document(doc_id):
+    """Public delete (used by the UI). Disabled on the public demo."""
+    if config.DEMO_MODE:
+        raise DemoLimitError("Deleting documents is disabled in the public demo.")
+    _remove_document(doc_id)
+
+
+def _remove_document(doc_id):
     """Remove the document's chunks + embeddings from the index, then its registry row.
     Raises if any chunk is still retrievable afterwards."""
     _delete_chunks(doc_id)

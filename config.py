@@ -33,4 +33,10 @@ CANDIDATE_POOL = int(os.getenv("DOCUMIND_CANDIDATE_POOL", "20"))
 CHUNK_SIZE = int(os.getenv("DOCUMIND_CHUNK_SIZE", "800"))
 CHUNK_OVERLAP = int(os.getenv("DOCUMIND_CHUNK_OVERLAP", "150"))
 
+# Public-demo protections (turn on in the hosted app with DOCUMIND_DEMO=1)
+DEMO_MODE = os.getenv("DOCUMIND_DEMO", "0") == "1"
+DEMO_QUESTIONS_PER_MIN = int(os.getenv("DOCUMIND_DEMO_RPM", "3"))  # shared by ALL visitors
+DEMO_MAX_DOCS = int(os.getenv("DOCUMIND_DEMO_MAX_DOCS", "5"))
+DEMO_MAX_UPLOAD_MB = int(os.getenv("DOCUMIND_DEMO_MAX_MB", "5"))
+
 ALLOWED_EXTENSIONS = (".pdf", ".txt", ".md")

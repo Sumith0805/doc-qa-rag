@@ -1,4 +1,5 @@
 """Grounded question answering: retrieve -> abstain if weak -> generate -> validate citations."""
+import collections
 import os
 import re
 import time
@@ -10,6 +11,17 @@ NOT_FOUND = (
     "I couldn't find sufficient evidence in the uploaded documents to answer that question."
 )
 ABSTAIN_TOKEN = "INSUFFICIENT_EVIDENCE"
+BUSY_MESSAGE = (
+    "The demo is busy right now: all visitors share one free AI quota. "
+    "Please try again in {seconds} seconds."
+)
+UNAVAILABLE_MESSAGE = "The AI service is temporarily unavailable. Please try again in a minute."
+RETRY_DELAYS = (3, 8, 15)  # seconds to wait between retries when the AI provider says "slow down"
+
+
+class LLMUnavailable(RuntimeError):
+    """The AI provider could not answer (rate limit after retries, network error, ...)."""
+
 
 SYSTEM_PROMPT = f"""You answer questions using ONLY the numbered sources provided.
 Rules:
@@ -96,6 +108,33 @@ def _clean_key(raw):
     return re.sub(r"[^A-Za-z0-9_-]", "", raw or "")
 
 
+def with_retries(call, retry_on, delays=RETRY_DELAYS, sleep=time.sleep):
+    """Run call(); if it raises `retry_on`, wait and try again (once per delay)."""
+    for attempt in range(len(delays) + 1):
+        try:
+            return call()
+        except retry_on:
+            if attempt == len(delays):
+                raise
+            sleep(delays[attempt])
+
+
+# Demo-mode throttle: at most DEMO_QUESTIONS_PER_MIN answered questions per minute, all visitors combined.
+_call_times = collections.deque()
+
+
+def _rate_limit_wait(now=None):
+    """Return 0 if a question may use the AI now (and record it), else seconds to wait."""
+    now = time.monotonic() if now is None else now
+    window = 60.0
+    while _call_times and now - _call_times[0] >= window:
+        _call_times.popleft()
+    if len(_call_times) >= config.DEMO_QUESTIONS_PER_MIN:
+        return int(window - (now - _call_times[0])) + 1 if _call_times else int(window)
+    _call_times.append(now)
+    return 0
+
+
 _groq_client = None
 
 
@@ -108,14 +147,22 @@ def _groq_llm(prompt, hits):
         if not key:
             raise RuntimeError("GROQ_API_KEY is not set (add it to .env or use DOCUMIND_LLM=mock)")
         _groq_client = Groq(api_key=key)
-    reply = _groq_client.chat.completions.create(
-        model=config.GROQ_MODEL,
-        temperature=0,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ],
-    )
+    import groq
+
+    def call():
+        return _groq_client.chat.completions.create(
+            model=config.GROQ_MODEL,
+            temperature=0,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+        )
+
+    try:
+        reply = with_retries(call, groq.RateLimitError)
+    except groq.APIError as exc:  # includes RateLimitError once the retries are used up
+        raise LLMUnavailable(str(exc)) from exc
     return (reply.choices[0].message.content or "").strip()
 
 
@@ -166,8 +213,18 @@ def answer(question, k=None, min_score=None, doc_ids=None, search_fn=None, llm_f
     if not hits or top < min_score:
         return finish(NOT_FOUND, True, True, [])
 
+    if config.DEMO_MODE:  # protect the shared AI quota on the public demo
+        wait = _rate_limit_wait()
+        if wait:
+            return finish(BUSY_MESSAGE.format(seconds=wait), True, True, [])
+
     prompt = f"Sources:\n\n{build_context(hits)}\n\nQuestion: {question}"
-    raw = llm_fn(prompt, hits).strip()
+    try:
+        raw = llm_fn(prompt, hits).strip()
+    except LLMUnavailable:
+        if not config.DEMO_MODE:
+            raise  # developers and the eval should see real errors
+        return finish(UNAVAILABLE_MESSAGE, True, True, [])
 
     # Gate 2: the model itself says the sources don't support an answer.
     if ABSTAIN_TOKEN in raw:

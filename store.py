@@ -69,7 +69,7 @@ def _delete_chunks(doc_id):
     _get_collection().delete(where={"doc_id": doc_id})
 
 
-def _check_demo_limits(path):
+def _check_demo_limits(path, user_id=""):
     """Public-demo guard rails (no effect unless DOCUMIND_DEMO=1)."""
     if not config.DEMO_MODE:
         return
@@ -78,7 +78,7 @@ def _check_demo_limits(path):
         raise DemoLimitError(
             f"Files are limited to {config.DEMO_MAX_UPLOAD_MB} MB in the public demo."
         )
-    in_library = [d for d in registry.list_documents() if d["status"] != "failed"]
+    in_library = [d for d in registry.list_documents(user_id=user_id) if d["status"] != "failed"]
     if len(in_library) >= config.DEMO_MAX_DOCS:
         raise DemoLimitError(
             f"The public demo library is full ({config.DEMO_MAX_DOCS} documents). "
@@ -86,21 +86,22 @@ def _check_demo_limits(path):
         )
 
 
-def index_document(path, filename):
+def index_document(path, filename, user_id=""):
     """Index one file WITHOUT touching other documents. Returns the registry record.
+    The document belongs to `user_id` ("" = the old single-user app).
 
     Re-uploading an identical file returns the existing record (record["duplicate"] = True).
-    """
+        """
     sha = hashlib.sha256(Path(path).read_bytes()).hexdigest()
-    existing = registry.get_by_hash(sha)
+    existing = registry.get_by_hash(sha, user_id)
     if existing:
         if existing["status"] == "ready":
             return {**existing, "duplicate": True}
         _remove_document(existing["id"])  # failed / stuck earlier attempt -> retry cleanly
 
-    _check_demo_limits(path)
+    _check_demo_limits(path, user_id)
     doc_id = uuid.uuid4().hex[:12]
-    registry.create_document(doc_id, filename, sha)  # status = processing
+    registry.create_document(doc_id, filename, sha, user_id)  # status = processing
     try:
         pages = read_document(path, filename)
         chunks = chunk_text(pages)
@@ -116,6 +117,7 @@ def index_document(path, filename):
                 metadatas=[
                     {
                         "doc_id": doc_id,
+                        "user_id": user_id,
                         "filename": filename,
                         "page": c["page"],
                         "chunk_index": i + j,
@@ -143,8 +145,11 @@ def search(question, k=None, doc_ids=None):
     """Hybrid (dense + BM25) search across all (or selected) documents.
     Compound questions are split into sub-questions that are retrieved separately and
     interleaved, so each part gets its own evidence.
+    doc_ids: only search these documents (None = all documents; [] = nothing).
     score = cosine similarity in [-1, 1] (relative to the sub-question that found the hit)."""
     k = k or config.TOP_K
+    if doc_ids is not None and not list(doc_ids):
+        return []  # an EMPTY allowed-list means "search nothing", never "search everything"
     parts = hybrid.split_question(question) if config.MULTI_QUERY else [question]
     if len(parts) == 1:
         return _search_one(question, k, doc_ids)

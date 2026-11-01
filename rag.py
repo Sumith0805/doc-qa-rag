@@ -190,7 +190,7 @@ def answer(question, k=None, min_score=None, doc_ids=None, search_fn=None, llm_f
         from store import search as search_fn  # lazy: keeps chromadb out of pure-logic tests
     llm_fn = llm_fn or _default_llm
 
-    hits = search_fn(question, k, doc_ids) if doc_ids else search_fn(question, k)
+    hits = search_fn(question, k, doc_ids) if doc_ids is not None else search_fn(question, k)
     retrieved = [_source_record(i, h) for i, h in enumerate(hits, start=1)]
     top = max((h["score"] for h in hits), default=0.0)
 

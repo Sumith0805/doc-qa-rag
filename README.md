@@ -14,42 +14,40 @@ Upload PDFs or text files, ask questions across all of them, and get answers tha
 - **Demo protections** (when `DOCUMIND_DEMO=1`): upload size and library caps, no deleting, retries with a shared rate limit and a friendly busy message.
 
 ## Architecture
-```
-app.py        Streamlit UI
-store.py      index / search / delete documents (ChromaDB)
-hybrid.py     BM25 re-ranking, question splitting
-rag.py        abstain gates, LLM call (Groq), citation verification
-registry.py   SQLite: documents, chat history, users, sessions
-auth.py       accounts: scrypt password hashes, session tokens
-chunker.py    PDF / text reader, page-aware chunks
-config.py     settings (environment variables)
-eval/         evaluation set, runner, debug tool
-tests/        pytest suite
-```
+
+    app.py        Streamlit UI
+    store.py      index / search / delete documents (ChromaDB)
+    hybrid.py     BM25 re-ranking, question splitting
+    rag.py        abstain gates, LLM call (Groq), citation verification
+    registry.py   SQLite: documents, chat history, users, sessions
+    auth.py       accounts: scrypt password hashes, session tokens
+    chunker.py    PDF / text reader, page-aware chunks
+    config.py     settings (environment variables)
+    eval/         evaluation set, runner, debug tool
+    tests/        pytest suite
 
 ## Run locally
-```bash
-python -m venv venv
-venv\Scripts\activate            # Windows (macOS/Linux: source venv/bin/activate)
-pip install -r requirements-dev.txt
-cp .env.example .env             # then put your GROQ_API_KEY in .env
-streamlit run app.py
-```
+
+    python -m venv venv
+    venv\Scripts\activate            (Windows; macOS/Linux: source venv/bin/activate)
+    pip install -r requirements-dev.txt
+    cp .env.example .env             (then put your GROQ_API_KEY in .env)
+    streamlit run app.py
 
 ## Run with Docker
-```bash
-cp .env.example .env             # add GROQ_API_KEY
-docker compose up --build        # http://localhost:8501
-```
+
+    cp .env.example .env             (add GROQ_API_KEY)
+    docker compose up --build        (then open http://localhost:8501)
+
 CI builds the Docker image on every push.
 
 ## Tests and evaluation
-```bash
-pytest
-python -m eval.run_eval --validate       # check eval labels against the documents
-python -m eval.run_eval --llm groq       # retrieval, answers, citations, refusals, latency
-python -m eval.inspect_query "your question" --expect "text you expect"   # debug retrieval
-```
+
+    pytest
+    python -m eval.run_eval --validate       (check eval labels against the documents)
+    python -m eval.run_eval --llm groq       (retrieval, answers, citations, refusals, latency)
+    python -m eval.inspect_query "your question" --expect "text you expect"
+
 Every run is saved to `eval/results/`.
 
 ## Results

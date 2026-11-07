@@ -40,3 +40,8 @@ DEMO_MAX_DOCS = int(os.getenv("DOCUMIND_DEMO_MAX_DOCS", "5"))
 DEMO_MAX_UPLOAD_MB = int(os.getenv("DOCUMIND_DEMO_MAX_MB", "5"))
 
 ALLOWED_EXTENSIONS = (".pdf", ".txt", ".md")
+
+# API limits (per user). Defaults are guesses: tune them after measuring on the real server.
+MAX_UPLOAD_MB = int(os.getenv("DOCUMIND_MAX_UPLOAD_MB", "10"))
+MAX_PDF_PAGES = int(os.getenv("DOCUMIND_MAX_PDF_PAGES", "100"))
+MAX_DOCS_PER_USER = int(os.getenv("DOCUMIND_MAX_DOCS_PER_USER", "20"))

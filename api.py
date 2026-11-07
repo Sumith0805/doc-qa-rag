@@ -1,17 +1,20 @@
-"""DocuMind HTTP API. Step 1: health check and accounts.
+"""DocuMind HTTP API: health, accounts, documents and chat.
 
 Run locally:  uvicorn api:app --reload      then open http://127.0.0.1:8000/docs
 Clients send the login token as the header  Authorization: Bearer <token>
+Run ONE worker only (the vector store uses module-level globals).
 """
 import os
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 import auth
+from deps import bearer_token, current_user
+from routers import chat, documents
 
-app = FastAPI(title="DocuMind API", version="0.1.0")
+app = FastAPI(title="DocuMind API", version="0.2.0")
 
 # Which websites may call this API from a browser (your frontend's address goes here later).
 _DEFAULT_ORIGINS = "http://localhost:3000,http://localhost:5500,http://127.0.0.1:5500"
@@ -23,6 +26,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(documents.router)
+app.include_router(chat.router)
 
 
 class Credentials(BaseModel):
@@ -38,25 +44,6 @@ def _auth_status(exc, default):
     if "Too many" in message:
         return 429
     return default
-
-
-def bearer_token(authorization: str | None = Header(default=None)):
-    """Pull the token out of 'Authorization: Bearer <token>' (None if missing or malformed)."""
-    if not authorization:
-        return None
-    scheme, _, value = authorization.partition(" ")
-    value = value.strip()
-    return value if scheme.lower() == "bearer" and value else None
-
-
-def current_user(token: str | None = Depends(bearer_token)):
-    """Use as a dependency on any route that needs a logged-in user."""
-    user = auth.user_from_token(token)
-    if not user:
-        raise HTTPException(
-            status_code=401, detail="Not logged in.", headers={"WWW-Authenticate": "Bearer"}
-        )
-    return user
 
 
 @app.get("/health")

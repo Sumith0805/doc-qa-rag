@@ -1,17 +1,22 @@
 "use client";
 // The dashboard at /dashboard. Only logged-in users get here: useUser() is the guard.
-// Phase 3 adds documents, chat and history to this page.
+// Wide screens show Documents and Chat side by side. Phones show one at a time, with tabs.
 
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Chat from "@/components/Chat";
+import Documents from "@/components/Documents";
 import { logout } from "@/lib/api";
 import { useUser } from "@/lib/useUser";
+
+type Tab = "chat" | "documents";
 
 export default function DashboardPage() {
   const router = useRouter();
   const { user, loading } = useUser();
   const [leaving, setLeaving] = useState(false);
+  const [tab, setTab] = useState<Tab>("documents");
 
   async function onLogout() {
     setLeaving(true);
@@ -32,7 +37,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <>
+    <div className="app">
       <header className="topbar">
         <div className="topbar-brand">
           <Image src="/logo-mark.png" alt="" width={36} height={30} />
@@ -40,15 +45,32 @@ export default function DashboardPage() {
         </div>
         <div className="topbar-user">
           <span className="topbar-email">{user.email}</span>
-          <button className="btn" onClick={onLogout} disabled={leaving}>
+          <button className="btn btn-small" onClick={onLogout} disabled={leaving}>
             {leaving ? "Logging out..." : "Log out"}
           </button>
         </div>
       </header>
-      <main className="page">
-        <h1>Your library</h1>
-        <p className="muted">You are logged in. Documents and chat arrive in the next phase.</p>
+
+      {/* Phone-only tabs. aria-pressed tells screen readers which one is active. */}
+      <nav className="tabs" aria-label="Sections">
+        <button aria-pressed={tab === "documents"} onClick={() => setTab("documents")}>
+          Documents
+        </button>
+        <button aria-pressed={tab === "chat"} onClick={() => setTab("chat")}>
+          Chat
+        </button>
+      </nav>
+
+      <main className="panes" data-tab={tab}>
+        <div className="pane pane-documents">
+          <h2>Documents</h2>
+          <Documents />
+        </div>
+        <div className="pane pane-chat">
+          <h2>Chat</h2>
+          <Chat />
+        </div>
       </main>
-    </>
+    </div>
   );
 }

@@ -163,6 +163,7 @@ a {
   border: 1px solid var(--error);
   color: var(--error);
   font-size: 0.9rem;
+  overflow-wrap: anywhere;
 }
 
 .form-footer {
@@ -240,8 +241,314 @@ a {
   white-space: nowrap;
 }
 
-.page {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 24px 16px;
+/* The dashboard fills the screen exactly: top bar, (phone tabs), then the panes. */
+.app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: none; /* shown only on phones, see the media query at the bottom */
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-1);
+}
+
+.tabs button {
+  flex: 1;
+  min-height: 44px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tabs button[aria-pressed="true"] {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+
+.panes {
+  flex: 1;
+  min-height: 0; /* lets the children scroll instead of stretching the page */
+  display: grid;
+  grid-template-columns: 340px 1fr;
+}
+
+.pane {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.pane h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.pane-documents {
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.pane-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.btn-small {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.notice {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--success);
+  color: var(--success);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere; /* long file names wrap instead of spilling out */
+}
+
+/* ---------- documents ---------- */
+
+.upload {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.upload-name,
+.doc-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress {
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--amethyst);
+  transition: width 150ms linear;
+}
+
+.doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.doc {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.doc-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.status-ready {
+  color: var(--success);
+}
+
+.status-failed {
+  color: var(--error);
+}
+
+/* ---------- chat ---------- */
+
+.chat {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-right: 4px;
+}
+
+.chat-empty {
+  margin: auto;
+  max-width: 36ch;
+  text-align: center;
+}
+
+.turn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bubble {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  max-width: min(100%, 70ch);
+  overflow-wrap: anywhere;
+}
+
+.bubble-question {
+  align-self: flex-end;
+  background: var(--amethyst-deep);
+}
+
+.bubble-answer {
+  align-self: flex-start;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+}
+
+/* "Not found" must look different from a real answer at a glance. */
+.bubble-notfound {
+  align-self: flex-start;
+  background: var(--amethyst-tint);
+  border: 1px dashed var(--amethyst);
+  color: var(--text-muted);
+}
+
+.notfound-label {
+  color: var(--amethyst-light);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.answer-text {
+  white-space: pre-wrap; /* keep the line breaks the model wrote */
+}
+
+.citations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.citation {
+  min-height: 36px;
+  padding: 4px 10px;
+  background: none;
+  border: 1px solid var(--cyan);
+  border-radius: 999px;
+  color: var(--cyan);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.citation[aria-expanded="true"] {
+  background: var(--cyan);
+  color: var(--jet);
+}
+
+.passage {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--cyan);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+.composer {
+  display: flex;
+  gap: 8px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.composer input {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* prevents iPhone Safari from zooming in */
+  padding: 12px;
+}
+
+.link-button {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  color: var(--amethyst-light);
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- phones ---------- */
+
+@media (max-width: 760px) {
+  .tabs {
+    display: flex;
+  }
+
+  .panes {
+    grid-template-columns: 1fr;
+  }
+
+  .pane h2 {
+    display: none; /* the tab already names the section */
+  }
+
+  .pane-documents {
+    border-right: none;
+  }
+
+  /* show only the pane whose tab is active */
+  .panes[data-tab="chat"] .pane-documents,
+  .panes[data-tab="documents"] .pane-chat {
+    display: none;
+  }
+
+  .topbar-email {
+    display: none;
+  }
 }

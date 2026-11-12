@@ -96,7 +96,8 @@ def main():
 
     r = client.get("/history", headers=alice)
     check("alice's history has her question", r.status_code == 200 and len(r.json()["messages"]) == 1)
-    check("bob's history holds only his own 2 questions", len(client.get("/history", headers=bob).json()["messages"]) == 2)
+    # bob has no documents, so the API answers "upload first" and saves nothing to history
+    check("bob's history is empty (no documents, nothing saved)", client.get("/history", headers=bob).json()["messages"] == [])
 
     ids = [d["id"] for d in client.get("/documents", headers=alice).json()["documents"]]
     check("alice deletes her documents", all(client.delete(f"/documents/{i}", headers=alice).status_code == 204 for i in ids))

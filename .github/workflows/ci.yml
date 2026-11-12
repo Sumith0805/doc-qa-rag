@@ -45,6 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t documind:ci .
+      - run: docker build -f Dockerfile.api -t documind-api:ci .
 
   frontend:
     runs-on: ubuntu-latest

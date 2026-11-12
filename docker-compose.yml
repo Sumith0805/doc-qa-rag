@@ -13,5 +13,25 @@ services:
       - documind_data:/data   # SQLite + vector index survive container restarts
     restart: unless-stopped
 
+  # The v2 API. Start only this one with:  docker compose up --build api
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: documind-api:latest
+    ports:
+      - "8000:8000"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      DOCUMIND_LLM: ${DOCUMIND_LLM:-groq}
+      # "local" keeps SQLite + ChromaDB in the volume below; "postgres" uses DATABASE_URL (Neon)
+      DOCUMIND_BACKEND: ${DOCUMIND_BACKEND:-local}
+      DATABASE_URL: ${DATABASE_URL:-}
+      DOCUMIND_ALLOWED_ORIGINS: ${DOCUMIND_ALLOWED_ORIGINS:-http://localhost:3000}
+    volumes:
+      - documind_api_data:/data
+    restart: unless-stopped
+
 volumes:
   documind_data:
+  documind_api_data:

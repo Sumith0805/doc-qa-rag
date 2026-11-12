@@ -1,0 +1,247 @@
+/* DocuMind design tokens and shared styles.
+   Every colour, radius and spacing value in the app comes from the variables below,
+   so changing the theme means editing this one block. */
+
+:root {
+  /* Jet black: page and surfaces (about 60% of any screen) */
+  --jet: #08080c;
+  --surface-1: #11111a;
+  --surface-2: #191926;
+  --border: #2a2a40;
+
+  /* Royal amethyst: brand colour (about 30%) */
+  --amethyst: #7b4fe0;
+  --amethyst-deep: #4c2a9e;
+  --amethyst-light: #a98bff; /* text and links on dark */
+  --amethyst-tint: #1b1233;
+
+  /* Electric cyan: ONLY the one main action per screen, active menu item,
+     citations and focus rings (about 10%) */
+  --cyan: #00e5ff;
+
+  --text: #f3f3fa;
+  --text-muted: #a5a5c0;
+  --success: #3ddc97;
+  --error: #ff6b8a;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh; /* dvh = the visible height on iPhone Safari, excluding its toolbars */
+  background: var(--jet);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--amethyst-light);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* ---------- layout ---------- */
+
+.center-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px;
+  /* keep content clear of the iPhone notch and home bar */
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+}
+
+.card h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+.muted {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---------- forms ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.field input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* below 16px, iPhone Safari zooms the page when the field is tapped */
+  padding: 12px;
+}
+
+.field input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 0;
+  border-color: transparent;
+}
+
+.btn {
+  min-height: 44px; /* comfortable touch target */
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 18px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--amethyst);
+}
+
+/* The single main action on a screen. Dark text on cyan: contrast is well above WCAG AA. */
+.btn-primary {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: var(--jet);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  border-color: var(--cyan);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--error);
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.form-footer {
+  margin: 20px 0 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- intro screen ---------- */
+
+.intro-logo {
+  width: min(60vw, 280px);
+  height: auto;
+  animation: intro-in 900ms ease-out both;
+}
+
+.intro-tagline {
+  color: var(--text-muted);
+  text-align: center;
+  animation: intro-in 900ms 300ms ease-out both;
+}
+
+@keyframes intro-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* People who ask their device for less motion get no animation. */
+@media (prefers-reduced-motion: reduce) {
+  .intro-logo,
+  .intro-tagline {
+    animation: none;
+  }
+}
+
+/* ---------- dashboard shell ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.topbar-email {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}

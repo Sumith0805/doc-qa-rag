@@ -1,6 +1,6 @@
 """Cut the logo sheet into website-ready PNGs with a transparent background.
 
-    python tools/make_logo_assets.py frontend/assets/logo-sheet.png frontend/assets
+    python tools/make_logo_assets.py tools/logo-sheet.png frontend/public
 """
 import sys
 from pathlib import Path

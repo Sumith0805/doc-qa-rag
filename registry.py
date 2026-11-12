@@ -234,3 +234,7 @@ def stats(user_id=None):
         rows = c.execute("SELECT sources FROM messages" + where, args).fetchall()
     s = sum(len(json.loads(r[0])) for r in rows)
     return {"questions": q, "sources": s}
+
+# Cloud mode (DOCUMIND_BACKEND=postgres): replace every function above with the Postgres version.
+if config.BACKEND == "postgres":
+    from registry_pg import *  # noqa: F401,F403,E402

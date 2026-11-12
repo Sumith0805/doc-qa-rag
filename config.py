@@ -45,3 +45,16 @@ ALLOWED_EXTENSIONS = (".pdf", ".txt", ".md")
 MAX_UPLOAD_MB = int(os.getenv("DOCUMIND_MAX_UPLOAD_MB", "10"))
 MAX_PDF_PAGES = int(os.getenv("DOCUMIND_MAX_PDF_PAGES", "100"))
 MAX_DOCS_PER_USER = int(os.getenv("DOCUMIND_MAX_DOCS_PER_USER", "20"))
+
+# Storage backend. "local" = SQLite + ChromaDB on disk (Streamlit, tests, your laptop).
+# "postgres" = Postgres + pgvector (Neon) for the free cloud deployment. Default stays "local".
+BACKEND = os.getenv("DOCUMIND_BACKEND", "local")
+DATABASE_URL = os.getenv("DATABASE_URL", "")  # secret: environment / .env only, never in git
+EMBED_DIM = int(os.getenv("DOCUMIND_EMBED_DIM", "384"))  # all-MiniLM-L6-v2 produces 384 numbers
+if BACKEND not in ("local", "postgres"):
+    raise ValueError("DOCUMIND_BACKEND must be 'local' or 'postgres'")
+if BACKEND == "postgres" and not DATABASE_URL:
+    raise RuntimeError("DOCUMIND_BACKEND=postgres needs DATABASE_URL to be set")
+
+# Per-user limit on POST /ask (always on, unlike the shared demo throttle above). In memory, per process.
+ASK_PER_MIN = int(os.getenv("DOCUMIND_ASK_PER_MIN", "10"))

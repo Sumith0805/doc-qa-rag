@@ -8,7 +8,7 @@ from pypdf import PdfReader
 
 import config
 import registry
-import store
+import vstore as store
 from deps import current_user, store_lock
 
 router = APIRouter(prefix="/documents", tags=["documents"])

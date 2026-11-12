@@ -144,3 +144,34 @@ def test_history_is_per_user_and_can_be_cleared():
     assert len(client.get("/history", headers=alice).json()["messages"]) == 1  # bob can't clear alice's
     assert client.delete("/history", headers=alice).status_code == 204
     assert client.get("/history", headers=alice).json()["messages"] == []
+
+
+def test_ask_with_no_documents_gives_a_friendly_message():
+    h = make_user("a@x.com")
+    r = client.post("/ask", json=Q, headers=h)
+    assert r.status_code == 200 and r.json()["abstained"] is True
+    assert "no ready documents" in r.json()["answer"]
+    assert client.get("/history", headers=h).json()["messages"] == []  # not saved
+
+
+def test_ask_is_rate_limited_per_user(monkeypatch):
+    monkeypatch.setattr(config, "ASK_PER_MIN", 2)
+    alice, bob = make_user("alice@x.com"), make_user("bob@x.com")
+    assert client.post("/ask", json=Q, headers=alice).status_code == 200
+    assert client.post("/ask", json=Q, headers=alice).status_code == 200
+    r = client.post("/ask", json=Q, headers=alice)
+    assert r.status_code == 429 and int(r.headers["Retry-After"]) > 0
+    assert client.post("/ask", json=Q, headers=bob).status_code == 200  # alice's limit is not bob's
+
+
+def test_every_error_is_a_json_object_with_a_text_detail():
+    h = make_user("a@x.com")
+    responses = [
+        client.get("/documents"),                                # 401
+        client.get("/documents/nope", headers=h),                # 404
+        upload(h, "x.exe", b"hi"),                               # 415
+        client.post("/ask", json={"question": ""}, headers=h),   # 422 from validation
+        client.post("/ask", json={}, headers=h),                 # 422 missing field
+    ]
+    for r in responses:
+        assert r.status_code >= 400 and isinstance(r.json()["detail"], str) and r.json()["detail"]

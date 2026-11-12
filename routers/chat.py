@@ -4,10 +4,11 @@ from pydantic import BaseModel, Field
 
 import rag
 import registry
-import store
-from deps import current_user, store_lock
+import vstore as store
+from deps import ask_rate_limit, current_user, store_lock
 
 router = APIRouter(tags=["chat"])
+NO_DOCUMENTS = "You have no ready documents yet. Upload a PDF, TXT or MD file, then ask again."
 ANSWER_FIELDS = ("answer", "abstained", "grounded", "citations", "citation_fixes",
                  "top_score", "latency_ms", "warning")
 
@@ -23,11 +24,14 @@ def _locked_search(question, k, doc_ids=None):
 
 
 @router.post("/ask")
-def ask(body: AskBody, user: dict = Depends(current_user)):
+def ask(body: AskBody, user: dict = Depends(ask_rate_limit)):
     question = body.question.strip()
     if not question:
         raise HTTPException(422, "Question is empty.")
     mine = {d["id"] for d in registry.list_documents(status="ready", user_id=user["id"])}
+    if not mine:  # nothing to search: say so plainly, skip the LLM and keep it out of history
+        return {"answer": NO_DOCUMENTS, "abstained": True, "grounded": True, "citations": [],
+                "citation_fixes": [], "top_score": 0.0, "latency_ms": 0, "warning": None}
     # The client may only NARROW the scope to its own documents, never widen it.
     scope = sorted(mine if body.doc_ids is None else mine & set(body.doc_ids))
     try:

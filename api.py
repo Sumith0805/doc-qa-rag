@@ -7,7 +7,9 @@ Run ONE worker only (the vector store uses module-level globals).
 import os
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 import auth
@@ -26,6 +28,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request, exc):
+    """Every error has the same shape: {"detail": "<readable text>"} (FastAPI's default is a list)."""
+    parts = []
+    for err in exc.errors():
+        field = ".".join(str(p) for p in err["loc"] if p not in ("body", "query", "path"))
+        parts.append(f"{field}: {err['msg']}" if field else err["msg"])
+    return JSONResponse(status_code=422, content={"detail": "; ".join(parts) or "Invalid request."})
+
 
 app.include_router(documents.router)
 app.include_router(chat.router)

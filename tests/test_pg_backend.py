@@ -176,3 +176,16 @@ def test_a_failed_block_rolls_back_its_writes():
 def pg_count():
     with pg.connect() as con:
         return con.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
+
+
+def test_embedding_is_done_in_small_batches():
+    sizes = []
+
+    def counting(texts):
+        sizes.append(len(texts))
+        return fake_embed(texts)
+
+    store.set_embedding_function(counting)
+    vectors = store._embed([f"text number {i}" for i in range(store.EMBED_BATCH * 2 + 3)])
+    assert len(vectors) == store.EMBED_BATCH * 2 + 3
+    assert sizes == [store.EMBED_BATCH, store.EMBED_BATCH, 3]

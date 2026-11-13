@@ -26,6 +26,8 @@ _embedding_fn = None  # None -> Chroma's default MiniLM; tests plug in a fast fa
 _default_embedder = None
 _bm25_cache = {}
 
+EMBED_BATCH = 8
+
 INSERT_SQL = (
     "INSERT INTO chunks (chunk_id, doc_id, user_id, filename, page, chunk_index, content, embedding) "
     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s::vector)"
@@ -52,7 +54,12 @@ def _embed(texts):
 
             _default_embedder = DefaultEmbeddingFunction()
         fn = _default_embedder
-    vectors = [[float(x) for x in v] for v in fn(texts)]
+    # Embed a few chunks at a time. Measured on a 66-chunk PDF: one big call peaked at ~670 MB of
+    # memory, batches of 8 at ~290 MB, for about one extra second. This is what lets the API fit
+    # on a small free host.
+    vectors = []
+    for start in range(0, len(texts), EMBED_BATCH):
+        vectors.extend([float(x) for x in v] for v in fn(texts[start:start + EMBED_BATCH]))
     if vectors and len(vectors[0]) != config.EMBED_DIM:
         raise RuntimeError(
             f"Embedding size {len(vectors[0])} does not match DOCUMIND_EMBED_DIM={config.EMBED_DIM}"

@@ -141,3 +141,38 @@ def test_failed_index_leaves_no_chunks(tmp_path):
     assert store.count_chunks() == 0
     docs = registry.list_documents(user_id="alice")
     assert len(docs) == 1 and docs[0]["status"] == "failed"
+
+
+def test_connections_are_reused_and_stale_ones_are_replaced(monkeypatch):
+    with pg.connect() as first:
+        first.execute("SELECT 1")
+    with pg.connect() as second:
+        assert second is first  # reused, not reopened
+    monkeypatch.setattr(pg, "IDLE_SECONDS", 0)  # everything now counts as stale
+    with pg.connect() as third:
+        assert third is not first and first.closed
+        assert third.execute("SELECT 1 AS one").fetchone()["one"] == 1
+
+
+def test_a_failed_statement_does_not_poison_the_next_connection():
+    with pytest.raises(psycopg.errors.UndefinedTable):
+        with pg.connect() as con:
+            con.execute("SELECT * FROM no_such_table")
+    with pg.connect() as con:  # a fresh, working connection
+        assert con.execute("SELECT 1 AS one").fetchone()["one"] == 1
+
+
+def test_a_failed_block_rolls_back_its_writes():
+    registry.create_user("u1", "roll@x.com", "hash")
+    before = pg_count()
+    assert before == 1
+    with pytest.raises(RuntimeError):
+        with pg.connect() as con:
+            con.execute("DELETE FROM users")
+            raise RuntimeError("boom")
+    assert pg_count() == before
+
+
+def pg_count():
+    with pg.connect() as con:
+        return con.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
